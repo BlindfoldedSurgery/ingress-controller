@@ -1,0 +1,42 @@
+ingress-nginx:
+  controller:
+    image:
+      chroot: true
+
+    allowSnippetAnnotations: true
+
+    config:
+      enable-brotli: true
+      use-http2: true
+      use-forwarded-headers: true
+
+    ingressClassResource:
+      default: true
+
+    replicaCount: 2
+
+    # TODO: enable this at some point
+    metrics:
+      enabled: false
+
+    service:
+      type: NodePort
+      nodePorts:
+        http: 30080
+        https: 30443
+
+    nodeSelector:
+
+  defaultBackend:
+    enabled: true
+    nodeSelector:
+    replicaCount: 2
+
+  rbac:
+    create: true
+
+  serviceAccount:
+    create: true
+
+  podSecurityPolicy:
+    enabled: false
